@@ -1,1 +1,124 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP, Browser, and Screen Info</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #007BFF;
+            margin-bottom: 30px;
+        }
+        .info-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        .info {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .info span {
+            font-weight: bold;
+            color: #007BFF;
+        }
+        p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .explanation {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+        }
+        .explanation p {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Your Information</h1>
+
+    <div class="info-container">
+        <div class="info">
+            <strong>IP Address:</strong> <span id="ip"></span>
+        </div>
+        <div class="info">
+            <strong>Browser Name:</strong> <span id="browser"></span>
+        </div>
+        <div class="info">
+            <strong>Screen Size:</strong> <span id="screen-size"></span>
+        </div>
+        <div class="info">
+            <strong>What does this mean?</strong>
+        </div>
+    </div>
+
+    <div class="explanation">
+        <h2>Explanations:</h2>
+        <p><strong>IP Address:</strong> Your IP address is a unique identifier assigned to your device when you connect to the internet. It helps servers recognize your device and route data to it.</p>
+        <p><strong>Browser Name:</strong> Your browser name refers to the specific software you're using to view this webpage. Different browsers (like Chrome, Firefox, etc.) have unique features and rendering capabilities.</p>
+        <p><strong>Screen Size:</strong> Your screen size is the physical resolution of your display, measured in pixels. It tells us how much space you have on your screen to display content.</p>
+        <p><strong>What does this mean?</strong> Websites use all of these metrics and hundreds more in order to uniquely identify you online, a process known as "fingerprinting".  It works even in "incognito" browsing, with VPNs, or with trackers blocked.</p>
+    </div>
+
+    <script>
+        // Get the user's IP address using a third-party API
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').textContent = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                document.getElementById('ip').textContent = 'Unable to fetch IP address';
+            });
+
+        // Get the user's browser name
+        function getBrowser() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.indexOf("Chrome") > -1) {
+                return "Chrome";
+            } else if (userAgent.indexOf("Firefox") > -1) {
+                return "Firefox";
+            } else if (userAgent.indexOf("Safari") > -1) {
+                return "Safari";
+            } else if (userAgent.indexOf("Edge") > -1) {
+                return "Edge";
+            } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+                return "Internet Explorer";
+            } else {
+                return "Unknown Browser";
+            }
+        }
+
+        document.getElementById('browser').textContent = getBrowser();
+
+        // Get the screen size
+        const screenSize = `${window.screen.width} x ${window.screen.height}`;
+        document.getElementById('screen-size').textContent = screenSize;
+    </script>
+
+</body>
+</html>
